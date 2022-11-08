@@ -3,7 +3,13 @@ name = "youtube_downloader"
 version = "0.1.0"
 edition = "2021"
 authors = ["malakai gunderson <discord: !kaifungaming#2947>"]
-
+description = "A cli YouTube downloader develop in rust"
+readme = "README.md"
+repository = "https://github.com/ATiltedTree/ytextract/"
+license = "GPL-3.0 license"
+keywords = ["youtube", "youtube-downloader"]
+categories = ["multimedia"]
+include = ["LICENSE*", "src", "Cargo.toml", "README.md"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

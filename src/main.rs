@@ -1,12 +1,17 @@
 use futures::StreamExt;
 use rustube::*;
-
+use std::io;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = ytextract::Client::new();
-    let id = "https://www.youtube.com/playlist?list=PLb6uTtHjobpUTZbeV8TkMkzMkkEcVdmPw";
-    let playlist = client.playlist(id.parse()?).await?;
-    let playlist_title = playlist.title();
+    println!("playlist url:");
+    let mut url = String::new();
+    io::stdin()
+        .read_line(&mut url)
+        .expect("Failed to read line");
+
+    let playlist = client.playlist(url.parse()?).await?;
+    let _playlist_title = playlist.title();
     println!("{:#?}", playlist.title());
     let videos = playlist.videos();
     futures::pin_mut!(videos);
@@ -18,7 +23,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let vid_id = video.id();
                 let vid_url = format!("https://www.youtube.com/watch?v={}", vid_id);
                 let id = Id::from_raw(&vid_url)?;
-                let path = format!("{vid_title}.mp3");
+                let _path = format!("{vid_title}.mp3");
                 let descrambler = VideoFetcher::from_id(id.into_owned())?.fetch().await?;
                 println!("Downloading : {vid_title}");
                 let video = descrambler.descramble()?;
