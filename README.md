@@ -8,7 +8,7 @@ else go to releses (on github) and download the latest version and move it to th
 
 
 
-##todo
+## todo
 - [ ] download single videos.
 - [x] download playlist.
 - [ ] download to mp4.
