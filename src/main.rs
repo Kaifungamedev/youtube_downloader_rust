@@ -6,10 +6,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = ytextract::Client::new();
     println!("playlist url:");
     let mut url = String::new();
+    
     io::stdin()
         .read_line(&mut url)
         .expect("Failed to read line");
-
+    println!("{url}");
+    url = url.replace("\r\n", "");
     let playlist = client.playlist(url.parse()?).await?;
     let _playlist_title = playlist.title();
     println!("{:#?}", playlist.title());

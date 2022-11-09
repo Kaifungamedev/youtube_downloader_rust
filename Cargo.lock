@@ -1838,8 +1838,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "youtube_downloader"
-version = "0.1.0"
+name = "youtube_downloader_cli"
+version = "0.1.1"
 dependencies = [
  "futures",
  "rustube",
