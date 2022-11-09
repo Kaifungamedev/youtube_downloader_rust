@@ -9,7 +9,7 @@ else go to releses (on github) and download the latest version and move it to th
 
 
 ## todo
-- [ ] download single videos.
+- [x] download single videos.
 - [x] download playlist.
-- [ ] download to mp4.
-- [x] download to mp3.
+- [x] download to mp4.
+- [ ] download to mp3.(found a bug that dose not convert to mp3)

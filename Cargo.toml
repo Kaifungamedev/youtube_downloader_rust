@@ -1,6 +1,6 @@
 [package]
 name = "youtube_downloader_cli"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 authors = ["malakai gunderson <discord: !kaifungaming#2947>"]
 description = "A cli YouTube downloader develop in rust"
@@ -17,4 +17,3 @@ rustube ="0.6.0"
 futures = "0.3.25"
 tokio = {version = "1.21.2",  features = ["full"] }
 ytextract = "0.11.0"
-
