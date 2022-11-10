@@ -1,6 +1,6 @@
 [package]
 name = "youtube_downloader_cli"
-version = "0.1.5"
+version = "0.1.4"
 edition = "2021"
 authors = ["malakai gunderson <discord: !kaifungaming#2947>"]
 description = "A cli YouTube downloader develop in rust"
