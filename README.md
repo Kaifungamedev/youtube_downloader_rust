@@ -1,4 +1,7 @@
-# youtube_downloader_rust
+[![Crates.io](https://img.shields.io/crates/v/youtube_downloader_cli?style=for-the-badge)](https://crates.io/crates/youtube_downloader_cli)
+[![Crates.io](https://img.shields.io/crates/d/youtube_downloader_cli?style=for-the-badge)](https://crates.io/crates/youtube_downloader_cli)
+[![Crates.io](https://img.shields.io/crates/l/youtube_downloader_cli?style=for-the-badge)](https://crates.io/crates/youtube_downloader_cli)<br>
+# youtube_downloader_cli
 A cli YouTube downloader develop in rust
 ## use 
 if installed with cargo and have .cargo/bin added to your path 
