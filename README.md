@@ -12,4 +12,4 @@ else go to releses (on github) and download the latest version and move it to th
 - [x] download single videos.
 - [x] download playlist.
 - [x] download to mp4.
-- [ ] download to mp3.(found a bug that dose not convert to mp3)
+- [ ] download to mp3. (windows only if installed from [github](https://github.com/Kaifungamedev/youtube_downloader_rust/releases) (or have ffmpeg.exe in .cargo/bin.) ).
