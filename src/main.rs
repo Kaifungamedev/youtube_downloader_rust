@@ -45,18 +45,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .await?;
                     println!("done downoading");
                     
-
-                    if env::consts::OS == "windows" {
-                        Command::new(format!(
-                            "{dq}{}/ffmpeg.exe{dq} {dq}{}/{}.mp4{dq} {dq}{}/{}.mp3{dq}",
-                            path.display(),
-                            path.display(),
-                            vid_title,
-                            path.display(),
-                            vid_title
-                        ))
-                        .spawn()
-                        .expect("command failed");
                     }
                 }
                 Err(err) => println!("{:#?},", err),
