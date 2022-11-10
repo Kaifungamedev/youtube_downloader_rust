@@ -7,7 +7,7 @@ A cli YouTube downloader develop in rust
 if installed with cargo and have .cargo/bin added to your path 
     then run  `youtube_downloader_cli` in the termanal.
     
-else go to releses (on github) and download the latest version and move it to the directory you whant to download videos to, then run `youtube_downloader_cli.exe`. 
+else go to releses (on [github](https://github.com/Kaifungamedev/youtube_downloader_rust/releases)) and download the latest version and move it to the directory you whant to download videos to, then run `youtube_downloader_cli.exe`. 
 
 
 
