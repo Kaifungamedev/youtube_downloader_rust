@@ -132,6 +132,11 @@ async fn mp4(url: &str) -> Result<(), Box<dyn std::error::Error>> {
                         .download_to(format!("{vid_title}.mp4"))
                         .await?;
                     println!("done downoading");
+<<<<<<< HEAD
+=======
+                    
+                    }
+>>>>>>> ba860f28ecf24435048b6fab0fac47753bd5ffaa
                 }
                 Err(err) => println!("{:#?},", err),
             }
