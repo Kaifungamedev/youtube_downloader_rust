@@ -2,3 +2,5 @@
 *.mp3
 *.mp4
 Cargo.lock
+*.exe
+*.tmp

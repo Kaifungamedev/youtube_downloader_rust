@@ -15,4 +15,4 @@ else go to releses (on [github](https://github.com/Kaifungamedev/youtube_downloa
 - [x] download single videos.
 - [x] download playlist.
 - [x] download to mp4.
-- [ ] download to mp3. (windows only if installed from [github](https://github.com/Kaifungamedev/youtube_downloader_rust/releases) (or have ffmpeg.exe in .cargo/bin.) ).
+- [x] download to mp3. (windows only).
