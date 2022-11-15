@@ -1,11 +1,10 @@
-use async_process::{Command, Stdio};
-use futures_lite::{io::BufReader, prelude::*};
 use futures_lite::StreamExt;
 use rustube::*;
 use std::env;
 use std::io;
 use std::io::Cursor;
 use std::path::Path;
+use std::process::Command;
 use std::*;
 type Ree<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 async fn fetch_url(url: String, file_name: String) -> Ree<()> {
@@ -15,8 +14,22 @@ async fn fetch_url(url: String, file_name: String) -> Ree<()> {
     std::io::copy(&mut content, &mut file)?;
     Ok(())
 }
+async fn converter(vid_title: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let path = env::current_dir()?;
+    let _convert_to_mp3 = Command::new(format!("{}\\ffmpeg.exe", path.display()))
+        .args(&[
+            "-hide_banner",
+            "-i",
+            &format!(r#"{}\\{vid_title}.tmp"#, path.display()),
+            &format!(r#"{}\\{vid_title}.mp3"#, path.display()),
+        ])
+        .spawn()?
+        .wait();
+    fs::remove_file(format!("{vid_title}.tmp"))?;
+    println!("converstion complete");
+    Ok(())
+}
 async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
-    let dq = '"';
     let client = ytextract::Client::new();
     let path_to_converter = "./ffmpeg.exe";
     if Path::new(path_to_converter).exists() {
@@ -34,7 +47,6 @@ async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
     if url.contains(&"playlist?list=") {
         println!("playlist");
         let playlist = client.playlist(url.parse()?).await?;
-        let _playlist_title = playlist.title();
         println!("{:#?}", playlist.title());
         let videos = playlist.videos();
         futures::pin_mut!(videos);
@@ -58,19 +70,7 @@ async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
                         .download_to(format!("{vid_title}.tmp"))
                         .await?;
                     println!("done downoading");
-                    let mut child = Command::new("cmd")
-                    .arg(".\\ffmpeg.exe")
-                    .arg("-i")
-                    .arg(format!("{dq}{vid_title}.tmp{dq}"))
-                    .arg(format!("{dq}{vid_title}.mp3{dq}"))
-                    .stdout(Stdio::piped())
-                    .spawn()?;
-                
-                let mut lines = BufReader::new(child.stdout.take().unwrap()).lines();
-                println!("{dq}{vid_title}.tmp{dq} {dq}{vid_title}.mp3{dq}");
-                while let Some(line) = lines.next().await {
-                    println!("{}", line?);
-                }
+                    converter(&vid_title).await?;
                 }
                 Err(err) => println!("{:#?},", err),
             }
@@ -84,7 +84,6 @@ async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
         let vid_id = video.id();
         let vid_url = format!("https://www.youtube.com/watch?v={}", vid_id);
         let id = Id::from_raw(&vid_url)?;
-        let _path = format!("{vid_title}.mp4");
         let descrambler = VideoFetcher::from_id(id.into_owned())?.fetch().await?;
         println!("Downloading: {vid_title}");
         let video = descrambler.descramble()?;
@@ -94,10 +93,10 @@ async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
             .filter(|stream| stream.includes_video_track && stream.includes_audio_track)
             .max_by_key(|stream| stream.quality_label)
             .unwrap()
-            .download_to(format!("{vid_title}.mp4"))
+            .download_to(format!("{vid_title}.tmp"))
             .await?;
         println!("done downoading");
-
+        converter(&vid_title).await?;
         println!("]");
     }
     Ok(())
@@ -132,12 +131,8 @@ async fn mp4(url: &str) -> Result<(), Box<dyn std::error::Error>> {
                         .download_to(format!("{vid_title}.mp4"))
                         .await?;
                     println!("done downoading");
-<<<<<<< HEAD
-=======
-                    
-                    }
->>>>>>> ba860f28ecf24435048b6fab0fac47753bd5ffaa
                 }
+
                 Err(err) => println!("{:#?},", err),
             }
         }
@@ -172,15 +167,15 @@ async fn mp4(url: &str) -> Result<(), Box<dyn std::error::Error>> {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Os: {}", env::consts::OS);
-    println!("YouTube url");
-    let mut url = String::new();
-    io::stdin()
-        .read_line(&mut url)
-        .expect("Failed to read line");
-    url = url.replace("\r\n", "");
-    if url.contains(&"www.youtube.com/") {
-        loop {
-            println!("mode:\n 1. mp4\n 2. mp3 (windows only)\n 3. exit");
+    loop {
+        println!("YouTube url (press e to exit)");
+        let mut url = String::new();
+        io::stdin()
+            .read_line(&mut url)
+            .expect("Failed to read line");
+        url = url.replace("\r\n", "");
+        if url.contains(&"www.youtube.com/") {
+            println!("mode:\n 1. mp4\n 2. mp3 (windows only)");
             let mut mode = String::new();
             io::stdin()
                 .read_line(&mut mode)
@@ -191,18 +186,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 mp4(&url).await?;
             } else if mode.to_string() == "2" && env::consts::OS == "windows" {
                 mp3(&url).await?;
-            } else if mode.to_string() == "3" {
-                break;
             } else {
                 println!("unsuported mode")
             }
+        } else if url == "e" {
+            break;
+        } else {
+            println!("NOT A YOUTUBE LINK!");
         }
-    } else {
-        println!("NOT A YOUTUBE LINK! press enter to exit");
-        let mut exit = String::new();
-        io::stdin()
-            .read_line(&mut exit)
-            .expect("Failed to read line");
     }
     Ok(())
 }
