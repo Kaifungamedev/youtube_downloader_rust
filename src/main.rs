@@ -1,4 +1,4 @@
-use futures_lite::StreamExt;
+use futures::StreamExt;
 use rustube::*;
 use std::env;
 use std::io;
@@ -189,7 +189,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             } else {
                 println!("unsuported mode")
             }
-        } else if url == "e" {
+        } else if url == "e" ||  url == "E"{
+            println!("clening up")
+            fs::remove_file("./ffmpeg.exe")?;
             break;
         } else {
             println!("NOT A YOUTUBE LINK!");
