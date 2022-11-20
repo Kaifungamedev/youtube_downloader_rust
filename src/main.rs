@@ -190,7 +190,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 println!("unsuported mode")
             }
         } else if url == "e" ||  url == "E"{
-            println!("clening up")
+            println!("clening up");
             fs::remove_file("./ffmpeg.exe")?;
             break;
         } else {
