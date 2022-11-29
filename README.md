@@ -1,6 +1,7 @@
 [![Crates.io](https://img.shields.io/crates/v/youtube_downloader_cli?style=for-the-badge)](https://crates.io/crates/youtube_downloader_cli)
 [![Crates.io](https://img.shields.io/crates/d/youtube_downloader_cli?style=for-the-badge)](https://crates.io/crates/youtube_downloader_cli)
 [![Crates.io](https://img.shields.io/crates/l/youtube_downloader_cli?style=for-the-badge)](https://crates.io/crates/youtube_downloader_cli)<br>
+> 🟡 **Project status**: maintenance mode<sup>[[?]](https://github.com/Tyrrrz/.github/blob/master/docs/project-status.md)</sup>
 # youtube_downloader_cli
 A cli YouTube downloader develop in rust
 ## use 
