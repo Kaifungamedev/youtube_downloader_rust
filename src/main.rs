@@ -26,7 +26,7 @@ async fn converter(vid_title: &str) -> Result<(), Box<dyn std::error::Error>> {
         .spawn()?
         .wait();
     fs::remove_file(format!("{vid_title}.tmp"))?;
-    println!("converstion complete");
+    println!("conversion complete");
     Ok(())
 }
 async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
@@ -35,7 +35,7 @@ async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
     if Path::new(path_to_converter).exists() {
         println!("true");
     } else if Path::new(path_to_converter).exists() != true {
-        println!("seting up");
+        println!("setting up");
         fetch_url(
             "https://github.com/Kaifungamedev/youtube_downloader_rust/releases/download/0.1.3/ffmpeg.exe".to_string(),
             "ffmpeg.exe".to_string(),
@@ -69,7 +69,7 @@ async fn mp3(url: &str) -> Result<(), Box<dyn std::error::Error>> {
                         .unwrap()
                         .download_to(format!("{vid_title}.tmp"))
                         .await?;
-                    println!("done downoading");
+                    println!("done downloading");
                     converter(&vid_title).await?;
                 }
                 Err(err) => println!("{:#?},", err),
@@ -130,7 +130,7 @@ async fn mp4(url: &str) -> Result<(), Box<dyn std::error::Error>> {
                         .unwrap()
                         .download_to(format!("{vid_title}.mp4"))
                         .await?;
-                    println!("done downoading");
+                    println!("done downloading");
                 }
 
                 Err(err) => println!("{:#?},", err),
@@ -174,7 +174,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .read_line(&mut url)
             .expect("Failed to read line");
         url = url.replace("\r\n", "");
-        if url.contains(&"www.youtube.com/") {
+        if url.contains(&"youtube.com/") {
             println!("mode:\n 1. mp4\n 2. mp3 (windows only)");
             let mut mode = String::new();
             io::stdin()
@@ -184,13 +184,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             if mode.to_string() == "1" {
                 print!("detecting type...");
                 mp4(&url).await?;
-            } else if mode.to_string() == "2" && env::consts::OS == "windows" {
-                mp3(&url).await?;
-            } else {
-                println!("unsuported mode")
+            } else if mode.to_string() == "2" {
+                if env::consts::OS == "windows" {
+                    mp3(&url).await?
+                }
+                else {
+                    println!("Only windows is supported for mp4 downloads")
+                }
+            } 
+            else {
+                println!("Command not fount")
             }
         } else if url == "e" ||  url == "E"{
-            println!("clening up");
+            println!("cleaning up");
             fs::remove_file("./ffmpeg.exe")?;
             break;
         } else {
