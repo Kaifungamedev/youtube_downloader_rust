@@ -4,7 +4,12 @@
 > 🟡 **Project status**: maintenance mode<sup>[[?]](https://github.com/Kaifungamedev/.github/blob/main/docs/repo-status.md)</sup>
 # youtube_downloader_cli
 A cli YouTube downloader developed in rust
-## use 
+## Installation and use
+To create a binary using cargo you can run the following command in the terminal:
+```sh
+    $ cargo build
+```
+
 if installed with cargo and have .cargo/bin added to your path and then run the following command in the terminal
 ```sh    
     $ youtube_downloader_cli
